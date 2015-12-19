@@ -23,6 +23,7 @@ def webhook():
         current_temp = str(api_handler(city, country))
         print(current_temp)
         response = dict(chat_id=chat_id, text=current_temp)
+        print (current_temp, response)
         url = 'https://api.telegram.org/bot{TOKEN}/sendMessage'.format(TOKEN=BOT_TOKEN)
         requests.post(url, json=response)
     #print (updates)
