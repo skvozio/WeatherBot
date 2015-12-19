@@ -26,7 +26,6 @@ def webhook():
             text = current_temp
         except:
             text = "Проверьте правильность ввода"
-            return 'OK'
         response = dict(chat_id=chat_id, text=text, reply_to_message_id=reply_to_message_id)
         url = 'https://api.telegram.org/bot{TOKEN}/sendMessage'.format(TOKEN=BOT_TOKEN)
         requests.post(url, json=response)
