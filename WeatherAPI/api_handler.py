@@ -10,4 +10,3 @@ def get_weather(city, country):
                            .format(city=city, country=country, ID=CLIENT_ID, SECRET=CLIENT_SECRET)).json()
     return message['response']['ob']['tempC']
 
-#get_weather('bishkek', 'kg')
