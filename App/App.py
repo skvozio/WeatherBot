@@ -17,6 +17,7 @@ def webhook():
         updates = request.get_json()
         chat_id = updates['message']['chat']['id']
         message_text = updates['message']['text']
+        print(message_text)
         reply_to_message_id = updates['message']['message_id']
         url = 'https://api.telegram.org/bot{TOKEN}/sendMessage'.format(TOKEN=BOT_TOKEN)
         splitted_text = message_text.split(', ')
