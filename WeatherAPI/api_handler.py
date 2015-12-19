@@ -8,6 +8,6 @@ def get_weather(city, country):
     message = requests.get('http://api.aerisapi.com/observations/{city},{country} \
                            ?client_id={ID}&client_secret={SECRET}'
                            .format(city=city, country=country, ID=CLIENT_ID, SECRET=CLIENT_SECRET)).json()
-    print(message['response']['ob']['tempC'])
+    return message['response']['ob']['tempC']
 
 get_weather('bishkek', 'kg')
