@@ -8,5 +8,7 @@ def get_weather(city, country):
     message = requests.get('http://api.aerisapi.com/observations/{city},{country} \
                            ?client_id={ID}&client_secret={SECRET}'
                            .format(city=city, country=country, ID=CLIENT_ID, SECRET=CLIENT_SECRET)).json()
+    if message['error']:
+        return 'Проверьте правильность ввода'
     return message['response']['ob']['tempC']
 
