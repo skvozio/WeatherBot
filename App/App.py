@@ -21,6 +21,9 @@ def webhook():
         url = 'https://api.telegram.org/bot{TOKEN}/sendMessage'.format(TOKEN=BOT_TOKEN)
         splitted_text = message_text.split(', ')
         if len(splitted_text) != 2:
+            requests.post(url, json =dict(chat_id=chat_id, text='Важней всего погода в доме, а что прислал ты - хуета!',
+                                          reply_to_message_id=reply_to_message_id))
+            #TODO: сделать метод для отправки сообщения
             return 'OK'
         city, country = message_text.split(', ')
         text = str(api_handler.get_weather(city, country))
