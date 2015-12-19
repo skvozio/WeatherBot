@@ -12,7 +12,9 @@ def hello_world():
 
 @app.route('/{token}'.format(token=TOKEN), methods=['POST'])
 def webhook():
-    print("It's working")
+    if request.method == 'POST':
+        updates = request.get_json()
+    print (updates)
     return 'OK'
 
 
