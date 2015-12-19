@@ -20,7 +20,7 @@ def webhook():
         print(message_text)
         city, country = message_text.split(', ')
         print(city, country)
-        current_temp = str(api_handler(city, country))
+        current_temp = str(api_handler.get_weather(city, country))
         print(current_temp)
         response = dict(chat_id=chat_id, text=current_temp)
         print (current_temp, response)
