@@ -19,6 +19,7 @@ def webhook():
         print('b')
         chat_id = updates['message']['chat']['id']
         print(chat_id)
+        print(updates)
         message_text = updates['message']['text']
         print(message_text)
         reply_to_message_id = updates['message']['message_id']
