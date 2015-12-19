@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import os
 
 BOT_TOKEN = os.environ['TOKEN']
@@ -12,7 +12,9 @@ def hello_world():
 
 @app.route('/{token}'.format(token=BOT_TOKEN), methods=['POST'])
 def webhook():
-    print("It's working")
+    if request.method == 'POST':
+        updates = request.get_json()
+    print (updates)
     return 'OK'
 
 
