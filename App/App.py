@@ -1,4 +1,7 @@
 from flask import Flask
+import os
+
+TOKEN = os.environ['Token']
 
 app = Flask(__name__)
 
@@ -10,3 +13,8 @@ def hello_world():
 
 if __name__ == '__main__':
     app.run()
+
+@app.route('/{token}'.format(TOKEN), methods=['POST'])
+def webhook():
+    print("It's working")
+    return 'OK'
