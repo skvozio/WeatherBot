@@ -13,6 +13,7 @@ def hello_world():
 
 @app.route('/{token}'.format(token=BOT_TOKEN), methods=['POST'])
 def webhook():
+    print('a')
     if request.method == 'POST':
         updates = request.get_json()
         chat_id = updates['message']['chat']['id']

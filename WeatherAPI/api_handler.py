@@ -4,6 +4,7 @@ import requests
 CLIENT_ID = os.environ['API_CLIENT_ID']
 CLIENT_SECRET = os.environ['API_SECRET']
 
+
 def get_weather(city, country):
     message = requests.get('http://api.aerisapi.com/observations/{city},{country} \
                            ?client_id={ID}&client_secret={SECRET}'
@@ -11,4 +12,3 @@ def get_weather(city, country):
     if message['error']:
         return 'Проверьте правильность ввода'
     return message['response']['ob']['tempC']
-
