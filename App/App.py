@@ -16,10 +16,7 @@ def webhook():
     print('a')
     if request.method == 'POST':
         updates = request.get_json()
-        print('b')
         chat_id = updates['message']['chat']['id']
-        print(chat_id)
-        print(updates)
         try:
             message_text = updates['message']['text']
         except:
