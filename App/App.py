@@ -18,10 +18,10 @@ def webhook():
         chat_id = updates['message']['chat']['id']
         message_text = updates['message']['text']
         city, country = message_text.split(', ')
-        current_temp = api_handler(city, country)
+        current_temp = str(api_handler(city, country))
         response = dict(chat_id=chat_id, text=current_temp)
         url = 'https://api.telegram.org/bot{TOKEN}/sendMessage'.format(TOKEN=BOT_TOKEN)
-        requests.post(url, response)
+        requests.post(url, json=response)
     #print (updates)
 
     return 'OK'
