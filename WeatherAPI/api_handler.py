@@ -7,7 +7,7 @@ CLIENT_SECRET = os.environ['API_SECRET']
 def get_weather(city, country):
     message = requests.get('http://api.aerisapi.com/observations/{city},{country} \
                            ?client_id=PjkW9QcuMXWbUqH02888X&client_secret=DLDt9gref9bjfkNcV6eDE1YVH6zXjeYRfwULshOw'
-                           .format(city=city, country=country)).json()['response']['ob']['tempC']
-    return message
+                           .format(city=city, country=country)).json()
+    print(message['response']['ob']['tempC'])
 
-#print(get_weather('bishkek', 'kg'))
+get_weather('bishkek', 'kg')
