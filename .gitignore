@@ -1,2 +1,4 @@
 **.pyc
 **/__pycache__/
+**App/.idea/
+.DS_Store
