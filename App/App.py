@@ -19,8 +19,8 @@ def webhook():
         message_text = updates['message']['text']
         city, country = message_text.split(', ')
         current_temp = str(api_handler.get_weather(city, country))
-        reply_to_message_id=updates['message']['chat']['message_id']
-        response = dict(chat_id=chat_id, text=current_temp, reply_to_message_id=reply_to_message_id)
+        #reply_to_message_id = updates['message']['chat']['message_id']
+        response = dict(chat_id=chat_id, text=current_temp)
         url = 'https://api.telegram.org/bot{TOKEN}/sendMessage'.format(TOKEN=BOT_TOKEN)
         requests.post(url, json=response)
 
