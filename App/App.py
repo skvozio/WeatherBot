@@ -17,6 +17,7 @@ def webhook():
         updates = request.get_json()
         chat_id = updates['message']['chat']['id']
         message_text = updates['message']['text']
+        print(message_text)
         city, country = message_text.split(', ')
         current_temp = str(api_handler.get_weather(city, country))
         reply_to_message_id = updates['message']['message_id']
