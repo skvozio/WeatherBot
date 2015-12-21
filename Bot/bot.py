@@ -17,3 +17,10 @@ class Bot(object):
     def send_message(self, data):
         response = self._post_method('sendMessage', data)
         return 'OK'
+
+    def get_update(self, user_update):
+        update = {}
+        update['chat_id'] = user_update['message']['chat']['id']
+        update['reply_to_message_id'] = user_update['message']['message_id']
+        update['message'] = user_update['message']
+        return update
