@@ -21,7 +21,7 @@ class Bot(object):
     def create_message(self, update):
         print ('create message', update)
         if 'text' in update['message'].keys():
-            if any(update['message']['text'].lower() in element for element in ['/help', ':question:help']):
+            if any(update['message']['text'].lower() in element for element in ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
                 text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
             elif update['message']['text'].lower() == 'city':
                 text = 'Погода какого города вас интересует'
