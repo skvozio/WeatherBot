@@ -19,13 +19,15 @@ class Bot(object):
 
     def create_message(self, update):
         if 'text' in update['message'].keys():
-            if update['message']['text'].lower() in '/help':
+            if update['message']['text'].lower() in element for element in ['/help', ':question:help']:
                 text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
+            elif update['message']['text'].lower() == 'city':
+                text = 'Погода какого города вас интересует'
             else:
                 text = get_weather(update['message']['text'])
         else:
             text = 'I understand only text messages'
-        keyboard = [['/help'],['Bishkek']]
+        keyboard = [[':question:help'],['city']]
         reply_keyboard_markup = dict(keyboard=keyboard, one_time_keyboard=True)
         message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text,
                        reply_markup=reply_keyboard_markup)
