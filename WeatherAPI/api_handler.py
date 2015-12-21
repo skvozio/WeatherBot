@@ -11,7 +11,7 @@ def get_weather(city):
                            .format(city=city, ID=CLIENT_ID)).json()
     if 'message' in message.keys():
         return message['message']
-    return str(int(message['main']['temp']))
+    return message['name'] +' '+ str(int(message['main']['temp']))
 
 
 if __name__ == '__main__':
