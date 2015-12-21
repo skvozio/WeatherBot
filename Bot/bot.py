@@ -25,7 +25,11 @@ class Bot(object):
                 text = get_weather(update['message']['text'])
         else:
             text = 'I understand only text messages'
-        message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text)
+        keyboard = [['/help'],['Bishkek']]
+        reply_keyboard_markup = dict(keyboard=keyboard, one_time_keyboard=True)
+        message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text,
+                       reply_markup=reply_keyboard_markup)
+
         return message
                 
 
