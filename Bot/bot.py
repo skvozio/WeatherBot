@@ -23,7 +23,7 @@ class Bot(object):
                 text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
             else:
                 text = get_weather(update['message']['text'])
-        elif:
+        else:
             text = 'I understand only text messages'
         message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text)
         return message
