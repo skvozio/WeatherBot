@@ -4,7 +4,8 @@ import requests
 from flask import Flask, request
 
 from WeatherAPI import api_handler
-from Bot import Bot
+from Bot import bot.Bot
+
 
 
 BOT_TOKEN = os.environ['TOKEN']
