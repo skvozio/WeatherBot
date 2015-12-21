@@ -4,7 +4,7 @@ import requests
 from flask import Flask, request
 
 from WeatherAPI import api_handler
-from Bot import bot.Bot
+from Bot.bot import Bot
 
 
 
