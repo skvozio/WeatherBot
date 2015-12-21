@@ -1,6 +1,11 @@
+import os
+import requests
+
 from flask import Flask, request
+
 from WeatherAPI import api_handler
-import os, requests
+from Bot import Bot
+
 
 BOT_TOKEN = os.environ['TOKEN']
 
@@ -15,27 +20,19 @@ def hello_world():
 def webhook():
     print('a')
     if request.method == 'POST':
+        bot = Bot(BOT_TOKEN)
         updates = request.get_json()
         chat_id = updates['message']['chat']['id']
         try:
-            message_text = updates['message']['text']
+            city = updates['message']['text']
+            print(message_text)
+            reply_to_message_id = updates['message']['message_id']
+            text = api_handler.get_weather(city)
+            response = dict(chat_id=chat_id, text=text, reply_to_message_id=reply_to_message_id)
+            bot.send_message(response)
+            return 'OK'
         except:
             return 'OK'
-        print(message_text)
-        reply_to_message_id = updates['message']['message_id']
-        url = 'https://api.telegram.org/bot{TOKEN}/sendMessage'.format(TOKEN=BOT_TOKEN)
-        splitted_text = message_text.split(', ')
-        if len(splitted_text) != 2:
-            requests.post(url, json =dict(chat_id=chat_id, text='Важней всего погода в доме, а что прислал ты - хуета!',
-                                          reply_to_message_id=reply_to_message_id))
-            #TODO: сделать метод для отправки сообщения
-            return 'OK'
-        city, country = message_text.split(', ')
-        text = str(api_handler.get_weather(city, country))
-        response = dict(chat_id=chat_id, text=text, reply_to_message_id=reply_to_message_id)
-        requests.post(url, json=response)
-
-    return 'OK'
 
 
 if __name__ == '__main__':
