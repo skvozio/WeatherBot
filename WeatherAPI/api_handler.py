@@ -2,13 +2,17 @@ import os
 import requests
 
 CLIENT_ID = os.environ['API_CLIENT_ID']
-CLIENT_SECRET = os.environ['API_SECRET']
+print(CLIENT_ID)
 
 
-def get_weather(city, country):
-    message = requests.get('http://api.aerisapi.com/observations/{city},{country} \
-                           ?client_id={ID}&client_secret={SECRET}'
-                           .format(city=city, country=country, ID=CLIENT_ID, SECRET=CLIENT_SECRET)).json()
-    if message['error']:
-        return 'Проверьте правильность ввода'
-    return message['response']['ob']['tempC']
+def get_weather(city):
+    message = requests.get('http://api.openweathermap.org/data/2.5/weather?q={city}\
+                           &appid={ID}&units=metric'
+                           .format(city=city, ID=CLIENT_ID)).json()
+    if 'message' in message.keys():
+        return message['message']
+    return str(int(message['main']['temp']))
+
+
+if __name__ == '__main__':
+    print(get_weather('Bishkek'))
