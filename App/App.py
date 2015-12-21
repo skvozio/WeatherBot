@@ -26,13 +26,14 @@ def webhook():
         chat_id = updates['message']['chat']['id']
         try:
             city = updates['message']['text']
-            print(message_text)
+            print(city)
             reply_to_message_id = updates['message']['message_id']
             text = api_handler.get_weather(city)
             response = dict(chat_id=chat_id, text=text, reply_to_message_id=reply_to_message_id)
             bot.send_message(response)
             return 'OK'
         except:
+            print('Exception caught')
             return 'OK'
 
 
