@@ -18,7 +18,7 @@ class Bot(object):
 
 
     def create_message(self, update):
-        if update['message']['text']:
+        if 'text' in update['message'].keys():
             if update['message']['text'].lower() in '/help':
                 text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
             else:
@@ -38,4 +38,5 @@ class Bot(object):
         update['chat_id'] = user_update['message']['chat']['id']
         update['reply_to_message_id'] = user_update['message']['message_id']
         update['message'] = user_update['message']
+        print(update)
         return update
