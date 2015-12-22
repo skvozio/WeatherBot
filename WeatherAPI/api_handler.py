@@ -7,15 +7,16 @@ print(CLIENT_ID)
 
 def get_weather(city):
     message = requests.get('http://api.openweathermap.org/data/2.5/weather?q={city}\
-                           &appid={ID}&units=metric'
+                           &appid={ID}'
                            .format(city=city, ID=CLIENT_ID)).json()
+    print(message)
     if 'message' in message.keys():
         return message['message']
-    return message['name'] +' '+ str(int(message['main']['temp'])) + '°C'
+    return message['name'] +' '+ str(int(message['main']['temp'])-273) + '°C'
 
 
 if __name__ == '__main__':
-    print(get_weather('Bishkek'))
+    print(get_weather('Бишкек,кг'))
     update = {}
-    if not update['message']:
-        print('ololol')
+    #if not update['message']:
+     #   print('ololol')
