@@ -2,7 +2,7 @@ import os
 import requests
 import emoji
 
-from WeatherAPI.api_handler import get_weather
+from WeatherAPI.api_handler import get_weather, get_forecast
 
 
 TOKEN = os.environ['TOKEN']
@@ -26,6 +26,9 @@ class Bot(object):
                 text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
             elif update['message']['text'].lower() == 'city':
                 text = 'Погода какого города вас интересует'
+            elif update['message']['text'].startswith('/forecast'):
+                city = update['message']['text'].split()[-1]
+                text = get_forecast(city)
             else:
                 text = get_weather(update['message']['text'])
         else:
