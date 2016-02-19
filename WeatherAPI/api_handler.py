@@ -11,7 +11,7 @@ EMOJI_WEATHER = {
 }
 
 
-def emojize_condition(condition):
+def _emojize_condition(condition):
 
     if condition.lower() in EMOJI_WEATHER.keys():
         condition = EMOJI_WEATHER[condition.lower()]
@@ -34,7 +34,7 @@ def get_forecast(city):
     response = 'Forecast for ' + message['city']['name'] + ':\n'
     for (temperature, date, condition) in daily_temps:
         date = datetime.datetime.fromtimestamp(date).strftime('%d.%m.%Y')
-        response += date + ': ' + str(temperature) + '°C '+ emojize_condition(condition) + '\n'
+        response += date + ': ' + str(temperature) + '°C '+ _emojize_condition(condition) + '\n'
 
     return response
 

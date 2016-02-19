@@ -25,10 +25,13 @@ class Bot(object):
                    ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
                 text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
             elif update['message']['text'].lower() == 'city':
-                text = 'Погода какого города вас интересует'
+                text = 'Please specify your city'
             elif update['message']['text'].startswith('/forecast'):
-                city = update['message']['text'].split()[-1]
-                text = get_forecast(city)
+                city = update['message']['text'].split()
+                if len(city) > 1:
+                    text = get_forecast(city)
+                else:
+                    text = 'Please specify a city: /forecast city name'
             else:
                 text = get_weather(update['message']['text'])
         else:
