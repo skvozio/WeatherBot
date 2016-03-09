@@ -14,7 +14,9 @@ BASE_URL = "https://api.telegram.org/bot{token}/".format(token=TOKEN)
 urlparse.uses_netloc.append('postgres')
 url = urlparse.urlparse(os.environ['DATABASE_URL'])
 
-KEYBOARD_OPTIONS = [[emoji.emojize(':question:help', use_aliases=True)], ['/city'], ['/forecast']]
+KEYBOARD_OPTIONS = [[emoji.emojize(':question:help', use_aliases=True)],
+                    ['/city'],
+                    ['/forecast']]
 KEYBOARD = dict(keyboard=KEYBOARD_OPTIONS, one_time_keyboard=True)
 FORCED = {'force_reply': True,}
 

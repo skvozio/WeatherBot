@@ -31,6 +31,9 @@ def get_weather(city):
 def get_forecast(city):
     message = requests.get(FORECAST_URI.format(city=city, ID=CLIENT_ID)).json()
 
+    if 'message' in message.keys():
+        return message['message']
+
     daily_temps = [(int(day_temp['temp']['max']-273), day_temp['dt'], day_temp['weather'][0]['main'])
                    for day_temp in message['list'][:7]]
     print(daily_temps)
