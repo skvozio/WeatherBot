@@ -43,7 +43,9 @@ class Bot(object):
 
         if 'reply_to_message' in message.keys():
             if message['reply_to_message']['text'] == 'Please specify your city':
-                    return get_weather(update['message']['text'])
+                return get_weather(message['text'])
+            elif message['reply_to_message']['text'] == 'Please specify a city for forecast:'
+                return get_forecast(message['text'])
 
         if any(update['message']['text'].lower() in element for element in
                    ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
@@ -55,7 +57,7 @@ class Bot(object):
             if len(city) > 1:
                 return get_forecast(city)
             else:
-                return 'Please specify a city: /forecast city name'
+                return 'Please specify a city for forecast:'
         return get_weather(update['message']['text'])
 
 
