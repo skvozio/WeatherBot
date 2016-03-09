@@ -11,7 +11,7 @@ from WeatherAPI.api_handler import get_weather, get_forecast
 TOKEN = os.environ['TOKEN']
 BASE_URL = "https://api.telegram.org/bot{token}/".format(token=TOKEN)
 urlparse.uses_netloc.append('postgres')
-url = urlparse.urlparse(os.environ['DATABSE_URL'])
+url = urlparse.urlparse(os.environ['DATABASE_URL'])
 
 
 
