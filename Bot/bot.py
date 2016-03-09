@@ -44,7 +44,7 @@ class Bot(object):
         if 'reply_to_message' in message.keys():
             if message['reply_to_message']['text'] == 'Please specify your city':
                 return get_weather(message['text'])
-            elif message['reply_to_message']['text'] == 'Please specify a city for forecast:'
+            elif message['reply_to_message']['text'] == 'Please specify a city for forecast:':
                 return get_forecast(message['text'])
 
         if any(update['message']['text'].lower() in element for element in
