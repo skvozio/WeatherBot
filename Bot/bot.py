@@ -53,7 +53,7 @@ class Bot(object):
         reply_keyboard_markup = dict(keyboard=keyboard, one_time_keyboard=True)
         force_reply = dict(force_reply=True)
         message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text,
-                       reply_markup=reply_keyboard_markup, force_reply=force_reply)
+                       reply_markup=force_reply)
 
         return message
                 
