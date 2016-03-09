@@ -70,8 +70,8 @@ class Bot(object):
         update['reply_to_message_id'] = user_update['message']['message_id']
         update['message'] = user_update['message']
         print('saving user to database')
-        self.cursor.execute('INSERT INTO users (id, first_name) VALUES (%s, %s)', (update['user_id'], update['first_name']))
-        self.cursor.commit()
+        #self.cursor.execute('INSERT INTO users (id, first_name) VALUES (%s, %s)', (update['user_id'], update['first_name']))
+        #self.cursor.commit()
         print(update)
         self.cursor.close()
         self.conn.close()
