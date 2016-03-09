@@ -36,25 +36,32 @@ class Bot(object):
         response = requests.post(BASE_URL+method, json=data)
         return 'OK'
 
+    def _parse_update(self, update):
+        message = update['message']
+        if 'text' not in message.keys():
+            return 'I understand only text messages'
+
+        if 'reply_to_message' in message.keys():
+            if message['reply_to_message']['text'] == 'Please specify your city':
+                    return get_weather(update['message']['text'])
+
+        if any(update['message']['text'].lower() in element for element in
+                   ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
+                text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
+        elif update['message']['text'].lower() == 'city':
+            text = 'Please specify your city'
+        elif update['message']['text'].startswith('/forecast'):
+            city = update['message']['text'].split()
+            if len(city) > 1:
+                return get_forecast(city)
+            else:
+                return 'Please specify a city: /forecast city name'
+        return get_weather(update['message']['text'])
+
 
     def create_message(self, update):
         print ('create message', update)
-        if 'text' in update['message'].keys():
-            if any(update['message']['text'].lower() in element for element in
-                   ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
-                text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
-            elif update['message']['text'].lower() == 'city':
-                text = 'Please specify your city'
-            elif update['message']['text'].startswith('/forecast'):
-                city = update['message']['text'].split()
-                if len(city) > 1:
-                    text = get_forecast(city)
-                else:
-                    text = 'Please specify a city: /forecast city name'
-            else:
-                text = get_weather(update['message']['text'])
-        else:
-            text = 'I understand only text messages'
+        text = self._parse_update(update)
         keyboard = [[emoji.emojize(':question:help', use_aliases=True)], ['city']]
         reply_keyboard_markup = dict(keyboard=keyboard, one_time_keyboard=True)
         force_reply = {'force_reply': True,}
