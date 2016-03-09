@@ -30,8 +30,7 @@ def get_weather(city):
 
 def get_forecast(city):
     message = requests.get(FORECAST_URI.format(city=city, ID=CLIENT_ID)).json()
-
-    if 'message' in message.keys():
+    if message['cod'] != '200':
         return message['message']
 
     daily_temps = [(int(day_temp['temp']['max']-273), day_temp['dt'], day_temp['weather'][0]['main'])
@@ -47,7 +46,7 @@ def get_forecast(city):
 
 if __name__ == '__main__':
     print(get_weather('Бишкек'))
-    print(get_forecast('Бишкек,кг'))
+    print(get_forecast('☀️'))
     print(emoji.demojize('☀️'))
     print()
     # message = requests.get('https://facebook.com/')
