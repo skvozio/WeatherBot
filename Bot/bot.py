@@ -1,17 +1,31 @@
 import os
 import requests
 import emoji
+import urllib.parse as urlparse
+import psycopg2
+
 
 from WeatherAPI.api_handler import get_weather, get_forecast
 
 
 TOKEN = os.environ['TOKEN']
 BASE_URL = "https://api.telegram.org/bot{token}/".format(token=TOKEN)
+urlparse.uses_netloc.append('postgres')
+url = urlparse.urlparse(os.environ['DATABSE_URL'])
+
 
 
 class Bot(object):
     def __init__(self, token):
         self.token = token
+        self.conn = psycopg2.connect(
+            database=url.path[1:],
+            user=url.username,
+            password=url.password,
+            host=url.hostname,
+            port=url.port
+        )
+        self.cursor = self.conn.cursor()
     
     def _post_method(self, method, data):
         response = requests.post(BASE_URL+method, json=data)
@@ -51,7 +65,14 @@ class Bot(object):
     def get_update(self, user_update):
         update = {}
         update['chat_id'] = user_update['message']['chat']['id']
+        update['user_id'] = user_update['message']['from']['id']
+        update['first_name'] = user_update['message']['from']['first_name']
         update['reply_to_message_id'] = user_update['message']['message_id']
         update['message'] = user_update['message']
+        print('saving user to database')
+        self.cursor.execute('INSERT INTO users (id, first_name) VALUES (%s, %s)', (update['user_id'], update['first_name']))
+        self.cursor.commit()
         print(update)
+        self.cursor.close()
+        self.conn.close()
         return update

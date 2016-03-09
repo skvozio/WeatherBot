@@ -1,6 +1,7 @@
 import os
 import requests
 
+
 from flask import Flask, request
 
 from WeatherAPI import api_handler
@@ -8,9 +9,12 @@ from Bot.bot import Bot
 
 
 
+
 BOT_TOKEN = os.environ['TOKEN']
 
 app = Flask(__name__)
+
+
 
 
 @app.route('/')
