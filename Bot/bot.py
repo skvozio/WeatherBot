@@ -14,6 +14,10 @@ BASE_URL = "https://api.telegram.org/bot{token}/".format(token=TOKEN)
 urlparse.uses_netloc.append('postgres')
 url = urlparse.urlparse(os.environ['DATABASE_URL'])
 
+KEYBOARD_OPTIONS = [[emoji.emojize(':question:help', use_aliases=True)], ['/city'], ['/forecast']]
+KEYBOARD = dict(keyboard=KEYBOARD_OPTIONS, one_time_keyboard=True)
+FORCED = {'force_reply': True,}
+
 
 class Bot(object):
     def __init__(self, token):
@@ -39,36 +43,34 @@ class Bot(object):
     def _parse_update(self, update):
         message = update['message']
         if 'text' not in message.keys():
-            return 'I understand only text messages'
+            return 'I understand only text messages', KEYBOARD
 
         if 'reply_to_message' in message.keys():
             if message['reply_to_message']['text'] == 'Please specify your city':
-                return get_weather(message['text'])
+                return get_weather(message['text']), KEYBOARD
             elif message['reply_to_message']['text'] == 'Please specify a city for forecast:':
-                return get_forecast(message['text'])
+                return get_forecast(message['text']), KEYBOARD
 
         if any(update['message']['text'].lower() in element for element in
                    ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
-                return 'To receive weather please send a message with city name.\nTo get help send me /help command'
+                return ('To receive weather please send a message with city name.\nTo get help send me /help command',
+                        KEYBOARD)
         elif message['text'].lower() == 'city':
-            return 'Please specify your city'
+            return 'Please specify your city', FORCED
         elif update['message']['text'].startswith('/forecast'):
             city = update['message']['text'].split()
             if len(city) > 1:
-                return get_forecast(city)
+                return get_forecast(city), KEYBOARD
             else:
-                return 'Please specify a city for forecast:'
-        return get_weather(update['message']['text'])
-
+                return 'Please specify a city for forecast:', FORCED
+        else:
+            return get_weather(update['message']['text']), KEYBOARD
 
     def create_message(self, update):
         print ('create message', update)
-        text = self._parse_update(update)
-        keyboard = [[emoji.emojize(':question:help', use_aliases=True)], ['city']]
-        reply_keyboard_markup = dict(keyboard=keyboard, one_time_keyboard=True)
-        force_reply = {'force_reply': True,}
-        message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text,
-                       reply_markup=force_reply)
+        text, reply_markup = self._parse_update(update)
+        message = dict(chat_id=update['chat_id'], text=text,
+                       reply_markup=reply_markup)
         print(json.dumps(message))
 
         return message
