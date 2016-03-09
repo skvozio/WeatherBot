@@ -55,8 +55,9 @@ class Bot(object):
         force_reply = dict(force_reply=True)
         message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text,
                        reply_markup=force_reply)
+        print(message)
 
-        return json.dumps(message)
+        return message
                 
 
     def send_message(self, data):
@@ -70,10 +71,8 @@ class Bot(object):
         update['first_name'] = user_update['message']['from']['first_name']
         update['reply_to_message_id'] = user_update['message']['message_id']
         update['message'] = user_update['message']
-        print('saving user to database')
         #self.cursor.execute('INSERT INTO users (id, first_name) VALUES (%s, %s)', (update['user_id'], update['first_name']))
         #self.cursor.commit()
-        print(update)
         self.cursor.close()
         self.conn.close()
         return update
