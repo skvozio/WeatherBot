@@ -55,7 +55,7 @@ class Bot(object):
                    ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
                 return ('To receive weather please send a message with city name.\nTo get help send me /help command',
                         KEYBOARD)
-        elif message['text'].lower() == 'city':
+        elif message['text'].lower() == '/city':
             return 'Please specify your city', FORCED
         elif update['message']['text'].startswith('/forecast'):
             city = update['message']['text'].split()
