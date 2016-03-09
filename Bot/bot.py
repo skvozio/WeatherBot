@@ -33,8 +33,8 @@ class Bot(object):
         )
         self.cursor = self.conn.cursor()
 
-        self.cursor.close()
-        self.conn.close()
+        #self.cursor.close()
+        #self.conn.close()
     
     def _post_method(self, method, data):
         response = requests.post(BASE_URL+method, json=data)
