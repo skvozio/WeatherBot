@@ -23,7 +23,6 @@ def hello_world():
 
 @app.route('/{token}'.format(token=BOT_TOKEN), methods=['POST'])
 def webhook():
-    print('a')
     if request.method == 'POST':
         bot = Bot(BOT_TOKEN)
         update = bot.get_update(request.get_json())
