@@ -47,9 +47,9 @@ class Bot(object):
 
         if any(update['message']['text'].lower() in element for element in
                    ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
-                text = 'To receive weather please send a message with city name.\nTo get help send me /help command'
-        elif update['message']['text'].lower() == 'city':
-            text = 'Please specify your city'
+                return 'To receive weather please send a message with city name.\nTo get help send me /help command'
+        elif message['text'].lower() == 'city':
+            return 'Please specify your city'
         elif update['message']['text'].startswith('/forecast'):
             city = update['message']['text'].split()
             if len(city) > 1:
