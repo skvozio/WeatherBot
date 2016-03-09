@@ -1,6 +1,7 @@
 import os
 import requests
 import emoji
+import json
 import urllib.parse as urlparse
 import psycopg2
 
@@ -51,11 +52,11 @@ class Bot(object):
             text = 'I understand only text messages'
         keyboard = [[emoji.emojize(':question:help', use_aliases=True)], ['city']]
         reply_keyboard_markup = dict(keyboard=keyboard, one_time_keyboard=True)
-        force_reply = dict(force_reply='True')
+        force_reply = dict(force_reply=True)
         message = dict(chat_id=update['chat_id'], reply_to_message_id=update['reply_to_message_id'], text=text,
                        reply_markup=force_reply)
 
-        return message
+        return json.dumps(message)
                 
 
     def send_message(self, data):
