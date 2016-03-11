@@ -16,8 +16,15 @@ url = urlparse.urlparse(os.environ['DATABASE_URL'])
 
 KEYBOARD_OPTIONS = [[emoji.emojize(':question:help', use_aliases=True)],
                     ['/city'],
-                    ['/forecast']]
+                    ['/forecast'],
+                    ['/alarm']]
+
+ALARM_KEYBOARD_OPTIONS = [['00:00'],
+                          ['01:00'],
+                          ['02:00'],
+                          ['03:00']]
 KEYBOARD = dict(keyboard=KEYBOARD_OPTIONS, one_time_keyboard=True)
+ALARM_KEYBOARD = dict(keyboard=ALARM_KEYBOARD_OPTIONS, one_time_keyboard=True)
 FORCED = {'force_reply': True,}
 
 
@@ -50,6 +57,8 @@ class Bot(object):
                 return get_weather(message['text']), KEYBOARD
             elif message['reply_to_message']['text'] == 'Please specify a city for forecast:':
                 return get_forecast(message['text']), KEYBOARD
+            elif 'alarm' in message['reply_to_message']['text']:
+                return 'Please choose alarm time', ALARM_KEYBOARD
 
         if any(update['message']['text'].lower() in element for element in
                    ['/help', emoji.emojize(':black_question_mark_ornament:help')]):
@@ -63,6 +72,8 @@ class Bot(object):
                 return get_forecast(city), KEYBOARD
             else:
                 return 'Please specify a city for forecast:', FORCED
+        elif update['message']['text'] == '/alarm':
+            return 'Please specify for which city you\'d like to set up an alarm?', FORCED
         else:
             return get_weather(update['message']['text']), KEYBOARD
 
