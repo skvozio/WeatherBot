@@ -12,8 +12,6 @@ EMOJI_WEATHER = {
 }
 
 
-
-
 def _emojize_condition(condition):
     if condition.lower() in EMOJI_WEATHER.keys():
         condition = EMOJI_WEATHER[condition.lower()]
@@ -49,9 +47,6 @@ if __name__ == '__main__':
     print(get_forecast('☀️'))
     print(emoji.demojize('☀️'))
     print()
-    # message = requests.get('https://facebook.com/')
-    # print(message.headers)
-    # print(message.cookies)
+
     update = {}
-    # if not update['message']:
-    #   print('ololol')
+
