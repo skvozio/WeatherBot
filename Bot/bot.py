@@ -98,15 +98,4 @@ class Bot(object):
         update['first_name'] = user_update['message']['from']['first_name']
         update['reply_to_message_id'] = user_update['message']['message_id']
         update['message'] = user_update['message']
-
-        self.cursor.execute(
-            """INSERT INTO users (id, first_name)
-               SELECT %s, %s
-               WHERE
-               NOT EXISTS (
-               SELECT id FROM users WHERE id=%s);""", (update['user_id'], update['first_name'], update['user_id'])
-        )
-        self.conn.commit()
-        self.cursor.close()
-        self.conn.close()
         return update
