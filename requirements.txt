@@ -2,7 +2,7 @@ emoji==0.3.8
 Flask==0.10.1
 gunicorn
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.11.3
 MarkupSafe==0.23
 psycopg2==2.6.1
 requests==2.9.0
